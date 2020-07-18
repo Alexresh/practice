@@ -1,0 +1,42 @@
+﻿@model practice.Models.UserAndRewards
+
+@{
+    ViewData["Title"] = "Add";
+    int _Id = -1;
+    string _FirstName = "";
+    string _LastName = "";
+    DateTime _Birthdate = DateTime.Now;
+    if (Model != null)
+    {
+        ViewData["Title"] = "Edit";
+        _Id = Model.user.Id;
+        _FirstName = Model.user.FirstName;
+        _LastName = Model.user.LastName;
+        _Birthdate = Model.user.Birthdate;
+    }
+
+}
+<a class="button" asp-action="Index">Back</a>
+<form asp-action="AddEdit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <p class="input-cap">First name: <input class="input" value="@_FirstName" name="FirstName"><span asp-validation-for="user.FirstName"></span></p>
+    <p class="input-cap">Last name: <input class="input" value="@_LastName" name="LastName"><span asp-validation-for="user.LastName"></span></p>
+    <p class="input-cap">Birtdate: <input class="input" value="@_Birthdate.ToString("yyyy-MM-dd")" type="date" name="Birthdate"><span asp-validation-for="user.Birthdate"></span></p>
+    <p class="input-cap">Rewards:</p>
+    <ul class="rewards-list">
+        @if(Model!=null) foreach (var reward in Model.rewards)
+        {
+            <li>@reward.Title<a class="button" asp-action="DelReward" asp-route-userid="@Model.user.Id" asp-route-rewardid="@reward.Id">Del</a></li>
+        }
+    </ul>
+    <button class="button" type="submit">
+        @if (_Id == -1)
+        {
+            <span>Add</span>
+        }
+        else
+        {
+            <span>Edit</span>
+        }
+    </button>
+</form>

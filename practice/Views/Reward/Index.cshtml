@@ -1,0 +1,22 @@
+﻿@model IEnumerable<practice.Models.RewardModel>
+
+@{
+    ViewData["Title"] = "Rewards";
+}
+<a class="button" asp-action="AddEdit" asp-route-id="-1">Add new reward</a>
+<table class="table">
+    <tr class="tr-line"><td>Title</td><td>Description</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr class="tr-line">
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td><a class="button" asp-action="AddEdit" asp-route-id="@item.Id">Edit</a></td>
+            <td>
+                <form class="delForm" asp-action="Delete" asp-route-id="@item.Id">
+                    <input type="submit" value="Delete" class="button">
+                </form>
+            </td>
+        </tr>
+    }
+</table>

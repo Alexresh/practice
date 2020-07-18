@@ -1,0 +1,27 @@
+﻿@model IEnumerable<practice.Models.UserModel>
+
+@{
+    ViewData["Title"] = "Users";
+}
+<a class="button" asp-action="AddEdit" asp-route-id="-1">Add new user</a>
+<table class="table">
+    <tr class="tr-line"><td>First name</td><td>Last name</td><td>Birthdate</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr class="tr-line">
+            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+            <td>@item.Birthdate.ToString("yyyy-MM-dd")</td>
+            <td><a class="button" asp-action="AddEdit" asp-route-id="@item.Id">View/Edit</a></td>
+            <td>
+                <form class="delForm" asp-action="Delete" asp-route-id="@item.Id">
+                    <input type="submit" value="Delete" class="button">
+                </form>
+            </td>
+            <td>
+                <a class="button" asp-action="RewardUser" asp-route-id="@item.Id">Reward this user</a>
+            </td>
+        </tr>
+    }
+</table>
+

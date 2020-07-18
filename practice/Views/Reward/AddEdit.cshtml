@@ -1,0 +1,32 @@
+﻿@model practice.Models.RewardModel
+
+@{
+    ViewData["Title"] = "Add";
+    int _Id = -1;
+    string _Title = "";
+    string _Description = "";
+    if (Model != null)
+    {
+        ViewData["Title"] = "Edit";
+        _Id = Model.Id;
+        _Title = Model.Title;
+        _Description = Model.Description;
+    }
+
+}
+<a class="button" asp-action="Index">Back</a>
+<form asp-action="AddEdit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <p class="input-cap">Title: <input class="input" value="@_Title" asp-for="Title"><span asp-validation-for="Title"></span></p>
+    <p class="input-cap">Description: <input class="input" value="@_Description" asp-for="Description"><span asp-validation-for="Description"></span></p>
+    <button class="button" type="submit">
+        @if (_Id == -1)
+        {
+            <span>Add</span>
+        }
+        else
+        {
+            <span>Edit</span>
+        }
+    </button>
+</form>
