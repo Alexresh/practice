@@ -1,4 +1,4 @@
-﻿@model practice.Models.UserAndRewards
+﻿@model practice.Models.UserViewModel
 @{
     ViewData["Title"] = "Reward User";
 }
@@ -6,11 +6,11 @@
 @if (Model != null)
 {
     <form asp-action="RewardUser">
-        <input type="hidden" value="@Model.user.Id" name="userid" />
-        <p class="input-cap" style="margin-top:30px">User: @Model.user.FirstName @Model.user.LastName</p>
+        <input type="hidden" value="@Model.Id" name="userid" />
+        <p class="input-cap" style="margin-top:30px">User: @Model.FirstName @Model.LastName</p>
         <p><span class="input-cap">Reward:</span>
             <select class="input" style="width:200px" name="rewardid">
-                @foreach (var reward in Model.rewards)
+                @foreach (var reward in Model.Rewards)
                 {
                     <option value="@reward.Id">@reward.Title</option>
                 }

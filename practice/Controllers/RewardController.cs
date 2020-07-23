@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using practice.Common;
 using practice.Models;
-using practice.services;
 
 namespace practice.Controllers
 {
@@ -20,13 +17,13 @@ namespace practice.Controllers
 
         public ActionResult Index()
         {
-            return View(_storage.GetRewardsList());
+            return View(_storage.GetRewardsList().ConvertAll(x=>x.ConvertToRewardViewModel()));
         }
 
         [HttpGet]
         public ActionResult AddEdit(int id)
         {
-            RewardModel reward = _storage.GetRewardsList().FirstOrDefault(re => re.Id == id);
+            RewardViewModel reward = _storage.GetRewardsList().FirstOrDefault(re => re.Id == id).ConvertToRewardViewModel();
             if (reward == null)
             {
                 return View();
@@ -35,15 +32,15 @@ namespace practice.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddEdit(RewardModel newReward)
+        public IActionResult AddEdit(RewardViewModel newReward)
         {
             if (newReward.Id == -1)
             {
-                _storage.AddReward(newReward);
+                _storage.AddReward(newReward.ConvertToRewardDomainModel());
             }
             else
             {
-                _storage.UpdateReward(newReward);
+                _storage.UpdateReward(newReward.ConvertToRewardDomainModel());
             }
 
             return RedirectToAction(nameof(Index));

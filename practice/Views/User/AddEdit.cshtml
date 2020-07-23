@@ -1,4 +1,4 @@
-﻿@model practice.Models.UserAndRewards
+﻿@model practice.Models.UserViewModel
 
 @{
     ViewData["Title"] = "Add";
@@ -9,26 +9,29 @@
     if (Model != null)
     {
         ViewData["Title"] = "Edit";
-        _Id = Model.user.Id;
-        _FirstName = Model.user.FirstName;
-        _LastName = Model.user.LastName;
-        _Birthdate = Model.user.Birthdate;
+        _Id = Model.Id;
+        _FirstName = Model.FirstName;
+        _LastName = Model.LastName;
+        _Birthdate = Model.Birthdate;
     }
 
 }
 <a class="button" asp-action="Index">Back</a>
 <form asp-action="AddEdit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <p class="input-cap">First name: <input class="input" value="@_FirstName" name="FirstName"><span asp-validation-for="user.FirstName"></span></p>
-    <p class="input-cap">Last name: <input class="input" value="@_LastName" name="LastName"><span asp-validation-for="user.LastName"></span></p>
-    <p class="input-cap">Birtdate: <input class="input" value="@_Birthdate.ToString("yyyy-MM-dd")" type="date" name="Birthdate"><span asp-validation-for="user.Birthdate"></span></p>
-    <p class="input-cap">Rewards:</p>
-    <ul class="rewards-list">
-        @if(Model!=null) foreach (var reward in Model.rewards)
+    <p class="input-cap">First name: <input class="input" value="@_FirstName" name="FirstName"><span asp-validation-for="FirstName"></span></p>
+    <p class="input-cap">Last name: <input class="input" value="@_LastName" name="LastName"><span asp-validation-for="LastName"></span></p>
+    <p class="input-cap">Birtdate: <input class="input" value="@_Birthdate.ToString("yyyy-MM-dd")" type="date" name="Birthdate"><span asp-validation-for="Birthdate"></span></p>
+    @if (Model != null)
+    {
+        <p class="input-cap">Rewards:</p>
+        <ul class="rewards-list">
+        @foreach (var reward in Model.Rewards)
         {
-            <li>@reward.Title<a class="button" asp-action="DelReward" asp-route-userid="@Model.user.Id" asp-route-rewardid="@reward.Id">Del</a></li>
+            <li>@reward.Title<a class="button" asp-action="DelReward" asp-route-userid="@Model.Id" asp-route-rewardid="@reward.Id">Del</a></li>
         }
-    </ul>
+        </ul>
+    }
     <button class="button" type="submit">
         @if (_Id == -1)
         {

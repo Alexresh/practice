@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using practice.Common;
+using practice.DBStorage;
 using practice.services;
 
 namespace practice
@@ -21,6 +23,7 @@ namespace practice
         {
             services.AddControllersWithViews();
             services.AddSingleton<IStorage>(new InMemoryStorage());
+            services.AddSingleton<IStorage>(new DBMemoryStorage(Configuration.GetConnectionString("Database")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
